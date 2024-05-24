@@ -7,9 +7,38 @@ import Link from "next/link";
 import React from "react";
 import { FieldValues } from "react-hook-form";
 import assets from "@/assets/index";
+import { userLogin } from "@/services/actions/userLogin";
+import { toast } from "sonner";
+import { setToLocalStorage } from "@/utils/localStorage";
+import { authKey } from "@/constants/authKey";
+import { loginSchema } from "@/schemas/auth.schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSendOtpInEmailMutation } from "@/redux/api/authApi";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-    const handleSubmit = (values: FieldValues) => {};
+    const [sendOtpInEmail] = useSendOtpInEmailMutation();
+    const router = useRouter();
+
+    const handleSubmit = async (values: FieldValues) => {
+        try {
+            const res = await userLogin(values);
+            if (res?.success && res?.data?.token) {
+                setToLocalStorage(authKey, res?.data?.token);
+                if (res?.data?.isEmailVerified === false) {
+                    await sendOtpInEmail({}).unwrap();
+                    router.push("/email-verification");
+                } else {
+                    toast.success("Login successfully");
+                    router.push("/");
+                }
+            } else {
+                throw new Error(res?.message || "Invalid credentials!");
+            }
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    };
 
     return (
         <Container>
@@ -73,7 +102,10 @@ const LoginPage = () => {
                         >
                             Sign In
                         </Typography>
-                        <FSForm onSubmit={handleSubmit}>
+                        <FSForm
+                            onSubmit={handleSubmit}
+                            resolver={zodResolver(loginSchema)}
+                        >
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <FSInput

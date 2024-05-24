@@ -7,9 +7,62 @@ import Link from "next/link";
 import React from "react";
 import { FieldValues } from "react-hook-form";
 import assets from "@/assets/index";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registrationSchema } from "@/schemas/auth.schemas";
+import { toast } from "sonner";
+import { userRegistration } from "@/services/actions/userRegistration";
+import { userLogin } from "@/services/actions/userLogin";
+import { setToLocalStorage } from "@/utils/localStorage";
+import { authKey } from "@/constants/authKey";
+import { useSendOtpInEmailMutation } from "@/redux/api/authApi";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
-    const handleSubmit = (values: FieldValues) => {};
+    const [sendOtpInEmail] = useSendOtpInEmailMutation();
+    const router = useRouter();
+
+    const handleSubmit = async (values: FieldValues) => {
+        try {
+            if (values.password !== values.confirmPassword) {
+                throw new Error("Passwords do not match");
+            }
+
+            const data = {
+                name: values.name,
+                email: values.email,
+                password: values.password,
+            };
+
+            const res = await userRegistration(data);
+
+            if (res?.success) {
+                toast.success("Registration successful!");
+
+                const loginData = {
+                    email: values.email,
+                    password: values.password,
+                };
+
+                const res = await userLogin(loginData);
+                if (res?.success && res?.data?.token) {
+                    setToLocalStorage(authKey, res?.data?.token);
+                    if (res?.data?.isEmailVerified === false) {
+                        await sendOtpInEmail({}).unwrap();
+                        router.push("/email-verification");
+                    } else {
+                        toast.success("Login successfully!");
+                        router.push("/");
+                    }
+                } else {
+                    throw new Error(res?.message || "Invalid credentials!");
+                }
+            } else {
+                throw new Error(res?.message || "Registration failed!");
+            }
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    };
 
     return (
         <Container>
@@ -73,22 +126,36 @@ const RegisterPage = () => {
                         >
                             Register
                         </Typography>
-                        <FSForm onSubmit={handleSubmit}>
+                        <FSForm
+                            onSubmit={handleSubmit}
+                            resolver={zodResolver(registrationSchema)}
+                            disableReset={true}
+                        >
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <FSInput
-                                        name="userName"
-                                        label="User Name"
+                                        type="text"
+                                        name="name"
+                                        label="Name"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <FSInput name="email" label="Email" />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FSInput name="password" label="Password" />
+                                    <FSInput
+                                        type="email"
+                                        name="email"
+                                        label="Email"
+                                    />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FSInput
+                                        type="password"
+                                        name="password"
+                                        label="Password"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <FSInput
+                                        type="password"
                                         name="confirmPassword"
                                         label="Confirm Password"
                                     />

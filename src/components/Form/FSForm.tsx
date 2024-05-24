@@ -8,6 +8,7 @@ import {
 type TConfig = {
     resolver?: any;
     defaultValues?: Record<string, any>;
+    disableReset?: boolean;
 };
 
 type TProps = {
@@ -15,7 +16,13 @@ type TProps = {
     onSubmit: SubmitHandler<FieldValues>;
 } & TConfig;
 
-const FSForm = ({ children, onSubmit, resolver, defaultValues }: TProps) => {
+const FSForm = ({
+    children,
+    onSubmit,
+    resolver,
+    defaultValues,
+    disableReset,
+}: TProps) => {
     const formConfig: TConfig = {};
 
     if (resolver) {
@@ -31,7 +38,9 @@ const FSForm = ({ children, onSubmit, resolver, defaultValues }: TProps) => {
 
     const submit: SubmitHandler<FieldValues> = (data) => {
         onSubmit(data);
-        reset();
+        if (!disableReset) {
+            reset();
+        }
     };
 
     return (
