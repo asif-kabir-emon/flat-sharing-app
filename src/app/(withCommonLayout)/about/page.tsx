@@ -3,12 +3,9 @@ import React from "react";
 
 const AboutPage = () => {
     return (
-        <Container>
-            <Box>
-                <Typography component="h2">About</Typography>
-            </Box>
-            dd
-        </Container>
+        <Box>
+            <Typography component="h2">About</Typography>
+        </Box>
     );
 };
 

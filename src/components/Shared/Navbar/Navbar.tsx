@@ -1,22 +1,16 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Container } from "@mui/material";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
+import { Container, Stack } from "@mui/material";
 
 interface Props {
     window?: () => Window;
@@ -59,39 +53,48 @@ const Navbar = (props: Props) => {
                 </Box>
             </Typography>
             <Divider />
-            <List>
+            <List
+                sx={{
+                    padding: "0 5px",
+                }}
+            >
                 {navItems.map((item) => (
-                    <ListItem key={item.name} disablePadding>
-                        <ListItemButton
-                            sx={{
-                                textAlign: "center",
+                    <Button
+                        key={item.name}
+                        fullWidth
+                        sx={{
+                            textAlign: "center",
+                            backgroundColor:
+                                pathName === item.url
+                                    ? "primary.main"
+                                    : "transparent",
+                            boxShadow: "none",
+                            mb: "2px",
+
+                            "&:hover": {
                                 backgroundColor:
                                     pathName === item.url
                                         ? "primary.main"
-                                        : "white",
-
-                                margin: "0 2px",
-                                borderRadius: "5px",
+                                        : "lightgrey",
+                                boxShadow: "none",
+                            },
+                        }}
+                    >
+                        <Typography
+                            key={item.url}
+                            component={Link}
+                            href={item.url}
+                            sx={{
+                                mx: 2,
+                                cursor: "pointer",
+                                color:
+                                    pathName === item.url ? "white" : "black",
+                                fontSize: "13px",
                             }}
                         >
-                            <Typography
-                                key={item.url}
-                                component={Link}
-                                href={item.url}
-                                sx={{
-                                    mx: 2,
-                                    cursor: "pointer",
-                                    color:
-                                        pathName === item.url
-                                            ? "white"
-                                            : "black",
-                                    fontSize: "13px",
-                                }}
-                            >
-                                {item.name}
-                            </Typography>
-                        </ListItemButton>
-                    </ListItem>
+                            {item.name}
+                        </Typography>
+                    </Button>
                 ))}
             </List>
         </Box>
@@ -101,103 +104,91 @@ const Navbar = (props: Props) => {
         window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <Container>
-            <Box sx={{ display: "flex" }}>
-                <CssBaseline />
-                <AppBar
-                    component="nav"
+        <Container
+            sx={{
+                backgroundColor: {
+                    xs: "grey.100",
+                    md: "transparent",
+                },
+            }}
+        >
+            <Stack
+                py={2}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+            >
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    sx={{ mr: 2, display: { md: "none" } }}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography
+                    variant="h4"
+                    component={Link}
+                    href="/"
+                    display={{ xs: "none", md: "block" }}
+                >
+                    <Typography
+                        variant="h4"
+                        component={Link}
+                        href="/"
+                        fontWeight={600}
+                    >
+                        Flat{" "}
+                        <Box component="span" color="primary.main">
+                            Share
+                        </Box>
+                    </Typography>
+                </Typography>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    gap={4}
                     sx={{
-                        backgroundColor: "grey.100",
-                        color: "black",
-                        boxShadow: "none",
+                        display: { xs: "none", md: "flex" },
                     }}
                 >
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            onClick={handleDrawerToggle}
-                            sx={{ mr: 2, display: { sm: "none" } }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                    {navItems.map((item) => (
                         <Typography
-                            variant="h6"
-                            component="div"
+                            key={item.url}
+                            component={Link}
+                            href={item.url}
+                            color={
+                                pathName === item.url ? "primary.main" : "black"
+                            }
                             sx={{
-                                flexGrow: 1,
-                                display: { xs: "none", sm: "block" },
+                                cursor: "pointer",
                             }}
                         >
-                            <Typography
-                                variant="h4"
-                                component={Link}
-                                href="/"
-                                fontWeight={600}
-                            >
-                                Flat{" "}
-                                <Box component="span" color="primary.main">
-                                    Share
-                                </Box>
-                            </Typography>
+                            {item.name}
                         </Typography>
-                        <Box
-                            sx={{
-                                display: { xs: "none", sm: "block" },
-                                mx: {
-                                    md: 3,
-                                },
-                            }}
-                        >
-                            {navItems.map((item) => (
-                                <Typography
-                                    key={item.url}
-                                    component={Link}
-                                    href={item.url}
-                                    sx={{
-                                        mx: 2,
-                                        cursor: "pointer",
-                                        color:
-                                            pathName === item.url
-                                                ? "primary.main"
-                                                : "black",
-                                        fontWeight: 600,
-                                    }}
-                                >
-                                    {item.name}
-                                </Typography>
-                            ))}
-                        </Box>
-                        <Box
-                            sx={{
-                                marginLeft: "auto",
-                            }}
-                        >
-                            <AuthButton />
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-                <nav>
-                    <Drawer
-                        container={container}
-                        variant="temporary"
-                        open={mobileOpen}
-                        onClose={handleDrawerToggle}
-                        ModalProps={{
-                            keepMounted: true,
-                        }}
-                        sx={{
-                            display: { xs: "block", sm: "none" },
-                            "& .MuiDrawer-paper": {
-                                boxSizing: "border-box",
-                                width: drawerWidth,
-                            },
-                        }}
-                    >
-                        {drawer}
-                    </Drawer>
-                </nav>
+                    ))}
+                </Stack>
+                <AuthButton />
+            </Stack>
+            <Box
+                sx={{
+                    display: { xs: "block", sm: "none" },
+                    width: drawerWidth,
+                    flexShrink: 0,
+                }}
+            >
+                <Drawer
+                    container={container}
+                    variant="temporary"
+                    open={mobileOpen}
+                    onClose={handleDrawerToggle}
+                    ModalProps={{
+                        keepMounted: true,
+                    }}
+                >
+                    {drawer}
+                </Drawer>
             </Box>
         </Container>
     );
