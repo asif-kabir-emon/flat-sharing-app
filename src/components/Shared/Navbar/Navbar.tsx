@@ -16,6 +16,7 @@ import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 
 interface Props {
     window?: () => Window;
@@ -34,6 +35,7 @@ const navItems = [
 ];
 
 const Navbar = (props: Props) => {
+    const pathName = usePathname();
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -60,8 +62,34 @@ const Navbar = (props: Props) => {
             <List>
                 {navItems.map((item) => (
                     <ListItem key={item.name} disablePadding>
-                        <ListItemButton sx={{ textAlign: "center" }}>
-                            <ListItemText primary={item.name} />
+                        <ListItemButton
+                            sx={{
+                                textAlign: "center",
+                                backgroundColor:
+                                    pathName === item.url
+                                        ? "primary.main"
+                                        : "white",
+
+                                margin: "0 2px",
+                                borderRadius: "5px",
+                            }}
+                        >
+                            <Typography
+                                key={item.url}
+                                component={Link}
+                                href={item.url}
+                                sx={{
+                                    mx: 2,
+                                    cursor: "pointer",
+                                    color:
+                                        pathName === item.url
+                                            ? "white"
+                                            : "black",
+                                    fontSize: "13px",
+                                }}
+                            >
+                                {item.name}
+                            </Typography>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -79,7 +107,7 @@ const Navbar = (props: Props) => {
                 <AppBar
                     component="nav"
                     sx={{
-                        backgroundColor: "white",
+                        backgroundColor: "grey.100",
                         color: "black",
                         boxShadow: "none",
                     }}
@@ -99,7 +127,7 @@ const Navbar = (props: Props) => {
                             component="div"
                             sx={{
                                 flexGrow: 1,
-                                display: { sm: "block" },
+                                display: { xs: "none", sm: "block" },
                             }}
                         >
                             <Typography
@@ -127,13 +155,27 @@ const Navbar = (props: Props) => {
                                     key={item.url}
                                     component={Link}
                                     href={item.url}
-                                    sx={{ mx: 2, cursor: "pointer" }}
+                                    sx={{
+                                        mx: 2,
+                                        cursor: "pointer",
+                                        color:
+                                            pathName === item.url
+                                                ? "primary.main"
+                                                : "black",
+                                        fontWeight: 600,
+                                    }}
                                 >
                                     {item.name}
                                 </Typography>
                             ))}
                         </Box>
-                        <AuthButton />
+                        <Box
+                            sx={{
+                                marginLeft: "auto",
+                            }}
+                        >
+                            <AuthButton />
+                        </Box>
                     </Toolbar>
                 </AppBar>
                 <nav>
