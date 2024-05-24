@@ -6,12 +6,14 @@ import {
     Avatar,
     Box,
     Divider,
+    IconButton,
     ListItemIcon,
     Menu,
     MenuItem,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const menuStyles = {
     paper: {
@@ -44,7 +46,6 @@ const menuStyles = {
 const AccountMenu = () => {
     const { data: myProfile, isLoading } = useGetMyProfileQuery({});
     const router = useRouter();
-    console.log(myProfile, isLoading);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -61,31 +62,37 @@ const AccountMenu = () => {
 
     return (
         <Box>
-            <button
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                    gap: 1,
+                }}
             >
-                {myProfile?.data?.profilePhoto ? (
-                    <Avatar
-                        src={myProfile?.data?.profilePhoto}
-                        alt={myProfile?.data?.name || "Profile Photo"}
-                    />
-                ) : (
-                    <Avatar
-                        sx={{
-                            bgcolor: "primary.main",
-                        }}
-                    >
-                        {myProfile?.data?.name?.charAt(0).toUpperCase()}
-                    </Avatar>
-                )}
-            </button>
+                <Avatar
+                    alt={myProfile?.data?.name}
+                    src={myProfile?.data?.profilePhoto}
+                />
+                <IconButton
+                    onClick={handleClick}
+                    aria-controls={open ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    //   size='small'
+                    sx={{
+                        background: "#ffffff",
+                        "& svg": {
+                            color: "primary.main",
+                        },
+                    }}
+                >
+                    <KeyboardArrowDownIcon />
+                </IconButton>
+            </Box>
             <Box>
                 <Menu
-                    id="basic-menu"
+                    id="account-menu"
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
@@ -96,12 +103,12 @@ const AccountMenu = () => {
                     anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                     sx={{
                         ...menuStyles,
-                        marginTop: "5px",
+                        marginTop: "10px",
                     }}
                 >
                     <MenuItem
                         onClick={() => {
-                            router.push(`/profile`);
+                            router.push(`/dashboard/profile`);
                         }}
                     >
                         <ListItemIcon>

@@ -1,11 +1,11 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 
 const ProfilePage = () => {
     return (
-        <Box>
+        <Container>
             <h1>Profile</h1>
-        </Box>
+        </Container>
     );
 };
 

@@ -1,0 +1,84 @@
+import { USER_ROLE } from "@/constants/role";
+import { DrawerItems, UserRole } from "@/types";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import TryIcon from "@mui/icons-material/Try";
+import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import ReviewsIcon from "@mui/icons-material/Reviews";
+import PersonIcon from "@mui/icons-material/Person";
+import KeyIcon from "@mui/icons-material/Key";
+
+export const drawerItems = (role: UserRole) => {
+    const roleMenus: DrawerItems[] = [];
+
+    const defaultRoutesB = [
+        {
+            title: "Dashboard",
+            path: ``,
+            icon: DashboardIcon,
+        },
+    ];
+
+    const defaultRoutesA = [
+        {
+            title: "Profile",
+            path: `profile`,
+            icon: PersonIcon,
+        },
+        {
+            title: "Change Password",
+            path: `change-password`,
+            icon: KeyIcon,
+        },
+    ];
+
+    switch (role) {
+        case USER_ROLE.ADMIN:
+            roleMenus.push(
+                {
+                    title: "Specialties",
+                    path: `${role}/specialties`,
+                    icon: TryIcon,
+                },
+                {
+                    title: "Doctors",
+                    path: `${role}/doctors`,
+                    icon: MedicalInformationIcon,
+                },
+                {
+                    title: "Schedules",
+                    path: `${role}/schedules`,
+                    icon: CalendarMonthIcon,
+                },
+                {
+                    title: "Appointments",
+                    path: `${role}/appointments`,
+                    icon: CalendarMonthIcon,
+                },
+                {
+                    title: "Reviews",
+                    path: `${role}/reviews`,
+                    icon: ReviewsIcon,
+                }
+            );
+            break;
+        case USER_ROLE.USER:
+            roleMenus.push(
+                {
+                    title: "Schedules",
+                    path: `${role}/schedule`,
+                    icon: CalendarMonthIcon,
+                },
+                {
+                    title: "Appointments",
+                    path: `${role}/appointment`,
+                    icon: CalendarMonthIcon,
+                }
+            );
+            break;
+        default:
+            break;
+    }
+
+    return [...defaultRoutesB, ...roleMenus, ...defaultRoutesA];
+};

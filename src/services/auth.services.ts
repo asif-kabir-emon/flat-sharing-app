@@ -1,6 +1,7 @@
 import { authKey } from "@/constants/authKey";
 import { getFromLocalStorage } from "@/utils/localStorage";
 import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
+import { decodedToken } from "@/utils/jwtDecode";
 
 export const isLoggedIn = () => {
     const authToken = getFromLocalStorage(authKey);
@@ -19,13 +20,14 @@ export const generateNewAccessToken = async () => {
     });
 };
 
-export const sendOtpInEmail = async () => {
-    return await axiosInstance({
-        url: `${process.env.NEXT_PUBLIC_API_URL}/auth/send-verification-email`,
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        withCredentials: true,
-    });
+export const getUserInfo = () => {
+    const authToken = getFromLocalStorage(authKey);
+
+    if (authToken) {
+        const decodedData: any = decodedToken(authToken);
+        return {
+            ...decodedData,
+            role: decodedData?.role?.toLowerCase(),
+        };
+    }
 };
