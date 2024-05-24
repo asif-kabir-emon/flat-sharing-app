@@ -36,29 +36,14 @@ export const drawerItems = (role: UserRole) => {
         case USER_ROLE.ADMIN:
             roleMenus.push(
                 {
-                    title: "Specialties",
-                    path: `${role}/specialties`,
+                    title: "Users",
+                    path: `${role}/users`,
                     icon: TryIcon,
                 },
                 {
-                    title: "Doctors",
-                    path: `${role}/doctors`,
+                    title: "Flats",
+                    path: `${role}/flats`,
                     icon: MedicalInformationIcon,
-                },
-                {
-                    title: "Schedules",
-                    path: `${role}/schedules`,
-                    icon: CalendarMonthIcon,
-                },
-                {
-                    title: "Appointments",
-                    path: `${role}/appointments`,
-                    icon: CalendarMonthIcon,
-                },
-                {
-                    title: "Reviews",
-                    path: `${role}/reviews`,
-                    icon: ReviewsIcon,
                 }
             );
             break;

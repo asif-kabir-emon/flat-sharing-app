@@ -30,7 +30,7 @@ const LoginPage = () => {
                     router.push("/email-verification");
                 } else {
                     toast.success("Login successfully");
-                    router.push("/");
+                    router.push("/dashboard");
                 }
             } else {
                 throw new Error(res?.message || "Invalid credentials!");
