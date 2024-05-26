@@ -6,11 +6,13 @@ import {
     useVerifyEmailMutation,
 } from "@/redux/api/authApi";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 const VerifyEmailPage = () => {
+    const router = useRouter();
     const [sendOtpInEmail] = useSendOtpInEmailMutation();
     const [verifyEmail] = useVerifyEmailMutation();
     const [resendTimer, setResendTimer] = useState<number>(60);
@@ -49,9 +51,9 @@ const VerifyEmailPage = () => {
         console.log(values);
         try {
             const res = await verifyEmail(values).unwrap();
-            console.log(res);
 
             if (res?.success) {
+                router.push("/dashboard");
                 toast.success(res?.message || "Email Verified Successfully!");
             } else {
                 throw new Error(res?.message || "Failed to verify Email!");

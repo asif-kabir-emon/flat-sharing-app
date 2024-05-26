@@ -50,13 +50,13 @@ export const drawerItems = (role: UserRole) => {
         case USER_ROLE.USER:
             roleMenus.push(
                 {
-                    title: "Schedules",
-                    path: `${role}/schedule`,
+                    title: "My Flats",
+                    path: `${role}/my-flats`,
                     icon: CalendarMonthIcon,
                 },
                 {
-                    title: "Appointments",
-                    path: `${role}/appointment`,
+                    title: "Flat Requests",
+                    path: `${role}/flat-requests`,
                     icon: CalendarMonthIcon,
                 }
             );
