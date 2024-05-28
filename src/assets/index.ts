@@ -6,6 +6,7 @@ const assets = {
     icons: {
         logo: require("@/assets/icons/flats.png"),
         user: require("@/assets/icons/profile.png"),
+        gallery: require("@/assets/icons/gallery.png"),
     },
 };
 

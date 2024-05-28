@@ -20,7 +20,19 @@ const userApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [TagTypes.flat],
         }),
+        getAllFlats: builder.query({
+            query: (arg: Record<string, any>) => ({
+                url: `${USER_URL}`,
+                method: "GET",
+                params: arg,
+            }),
+            providesTags: [TagTypes.flat],
+        }),
     }),
 });
 
-export const { useGetMyFlatsQuery, useDeleteSingleFlatMutation } = userApi;
+export const {
+    useGetMyFlatsQuery,
+    useDeleteSingleFlatMutation,
+    useGetAllFlatsQuery,
+} = userApi;
