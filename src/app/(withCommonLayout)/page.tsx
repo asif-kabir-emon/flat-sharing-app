@@ -1,7 +1,12 @@
+import Flats from "@/components/Flats/Flats";
 import { Box, Button } from "@mui/material";
 
 const HomePage = () => {
-    return <Box></Box>;
+    return (
+        <Box>
+            <Flats isFlatsPage={false} />
+        </Box>
+    );
 };
 
 export default HomePage;

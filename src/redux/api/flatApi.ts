@@ -28,6 +28,13 @@ const userApi = baseApi.injectEndpoints({
             }),
             providesTags: [TagTypes.flat],
         }),
+        getFlatById: builder.query({
+            query: (id: string) => ({
+                url: `${USER_URL}/${id}`,
+                method: "GET",
+            }),
+            providesTags: [TagTypes.flat],
+        }),
     }),
 });
 
@@ -35,4 +42,5 @@ export const {
     useGetMyFlatsQuery,
     useDeleteSingleFlatMutation,
     useGetAllFlatsQuery,
+    useGetFlatByIdQuery,
 } = userApi;

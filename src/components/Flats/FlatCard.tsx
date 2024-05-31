@@ -11,8 +11,11 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import BedIcon from "@mui/icons-material/Bed";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SellIcon from "@mui/icons-material/Sell";
+import { useRouter } from "next/navigation";
 
 const FlatCard = ({ flat }: any) => {
+    const router = useRouter();
+
     return (
         <>
             <Card sx={{ maxWidth: 345 }}>
@@ -129,7 +132,11 @@ const FlatCard = ({ flat }: any) => {
                         gap: "5px",
                     }}
                 >
-                    <Button size="small" fullWidth>
+                    <Button
+                        onClick={() => router.push(`/flats/${flat?.id}`)}
+                        size="small"
+                        fullWidth
+                    >
                         View Details
                     </Button>
                     <Button size="small" fullWidth>
