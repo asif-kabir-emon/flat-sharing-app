@@ -9,6 +9,8 @@ import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import SellIcon from "@mui/icons-material/Sell";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import GppGoodIcon from "@mui/icons-material/GppGood";
+import { useCreateBookingMutation } from "@/redux/api/bookingApi";
+import { toast } from "sonner";
 
 const StyledInformationBox = styled(Box)({
     background: "#f4f7fe70",
@@ -26,6 +28,24 @@ const StyledInformationBox = styled(Box)({
 });
 
 const FlatInfo = ({ flat }: { flat: any }) => {
+    const [createBooking] = useCreateBookingMutation();
+
+    const bookingFlat = async () => {
+        try {
+            const res = await createBooking({
+                flatId: flat?.id,
+            }).unwrap();
+
+            if (res?.success) {
+                toast.success("Flat booked successfully.");
+            } else {
+                throw new Error(res?.message || "Failed to book flat.");
+            }
+        } catch (error: any) {
+            toast.error(error.message || "Failed to book flat.");
+        }
+    };
+
     return (
         <Box my={2}>
             <Box
@@ -53,7 +73,14 @@ const FlatInfo = ({ flat }: { flat: any }) => {
                     {flat?.location}
                 </Box>
                 <Box>
-                    <Button disabled={!flat?.availability}>Book Now</Button>
+                    <Button
+                        disabled={!flat?.availability}
+                        onClick={() => {
+                            bookingFlat();
+                        }}
+                    >
+                        Book Now
+                    </Button>
                 </Box>
             </Box>
             <Box

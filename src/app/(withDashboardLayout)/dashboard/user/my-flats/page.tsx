@@ -3,18 +3,29 @@ import {
     useDeleteSingleFlatMutation,
     useGetMyFlatsQuery,
 } from "@/redux/api/flatApi";
-import { Box, Button, Container, Pagination, Typography } from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Button,
+    Container,
+    Pagination,
+    Stack,
+    Typography,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import Image from "next/image";
 import { useState } from "react";
-import ImageIcon from "@mui/icons-material/Image";
 import { useRouter } from "next/navigation";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "sonner";
+import AddIcon from "@mui/icons-material/Add";
+import AddFlatModal from "./components/AddFlatModal";
+import Progress from "@/components/UI/Progress/Progress";
 
 const MyFlatsPage = () => {
     const router = useRouter();
+    const [isAddFlatModalOpen, setIsAddFlatModalOpen] =
+        useState<boolean>(false);
 
     const query: Record<string, any> = {};
     const [page, setPage] = useState(1);
@@ -41,7 +52,6 @@ const MyFlatsPage = () => {
     };
 
     const handleFlatDelete = async (id: string) => {
-        console.log(id);
         try {
             const res = await deleteSingleFlat(id).unwrap();
 
@@ -64,24 +74,20 @@ const MyFlatsPage = () => {
             renderCell: ({ row }) => {
                 return (
                     <Box>
-                        {row?.photos.length ? (
-                            <Image
-                                src={row?.photos?.[0]}
-                                alt="flat"
-                                width={100}
-                                height={100}
-                            />
-                        ) : (
-                            <ImageIcon width={100} height={100} />
-                        )}
+                        <Avatar
+                            src={row?.photos[0] || "Flat Image"}
+                            alt="flat-image"
+                            variant="square"
+                            sx={{ width: 32, height: 32, borderRadius: "5px" }}
+                        />
                     </Box>
                 );
             },
         },
         { field: "location", headerName: "Location", minWidth: 300, flex: 1 },
         {
-            field: "totalRooms",
-            headerName: "Total Rooms",
+            field: "totalBedrooms",
+            headerName: "Total Bedrooms",
             minWidth: 100,
             flex: 1,
         },
@@ -106,9 +112,7 @@ const MyFlatsPage = () => {
                     >
                         <Button
                             onClick={() => {
-                                router.push(
-                                    `/dashboard/user/my-flats/${row.id}`
-                                );
+                                router.push(`/flats/${row.id}`);
                             }}
                             sx={{
                                 color: "white",
@@ -121,7 +125,7 @@ const MyFlatsPage = () => {
                             color="secondary"
                             onClick={() => {
                                 router.push(
-                                    `/dashboard/user/my-flats/${row.id}/edit`
+                                    `/dashboard/user/my-flats/edit/${row.id}`
                                 );
                             }}
                         >
@@ -149,42 +153,88 @@ const MyFlatsPage = () => {
                 overflow: "hidden",
             }}
         >
-            <Typography variant="h5" my={3}>
-                My Flats List
-            </Typography>
+            <Stack
+                spacing={2}
+                direction="row"
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}
+            >
+                <Typography variant="h5" my={3}>
+                    My Flats List
+                </Typography>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<AddIcon />}
+                    onClick={() => setIsAddFlatModalOpen(true)}
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    Add Flat
+                </Button>
+                <AddFlatModal
+                    open={isAddFlatModalOpen}
+                    setOpen={setIsAddFlatModalOpen}
+                />
+            </Stack>
             {!isLoading ? (
                 <Box
                     my={2}
                     sx={{ maxHeight: 600, width: "100%", overflow: "auto" }}
                 >
-                    <DataGrid
-                        rows={flatData || []}
-                        columns={columns || []}
-                        loading={isLoading}
-                        hideFooterPagination
-                        slots={{
-                            footer: () => {
-                                return (
-                                    <Box
-                                        sx={{
-                                            my: 2,
-                                            mx: "auto",
-                                        }}
-                                    >
-                                        <Pagination
-                                            count={pageCount}
-                                            page={page}
-                                            onChange={handleChange}
-                                            color="primary"
-                                        />
-                                    </Box>
-                                );
-                            },
-                        }}
-                    />
+                    {flatData?.length ? (
+                        <DataGrid
+                            rows={flatData || []}
+                            columns={columns || []}
+                            loading={isLoading}
+                            hideFooterPagination
+                            slots={{
+                                footer: () => {
+                                    return (
+                                        <Box
+                                            sx={{
+                                                my: 2,
+                                                mx: "auto",
+                                            }}
+                                        >
+                                            <Pagination
+                                                count={pageCount}
+                                                page={page}
+                                                onChange={handleChange}
+                                                color="primary"
+                                            />
+                                        </Box>
+                                    );
+                                },
+                            }}
+                        />
+                    ) : (
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                height: "100px",
+                                width: "100%",
+                                border: "1px solid #ccc",
+                                borderRadius: "5px",
+                            }}
+                        >
+                            No flats found
+                        </Typography>
+                    )}
                 </Box>
             ) : (
-                <Box>Loading...</Box>
+                <>
+                    <Progress />
+                </>
             )}
         </Container>
     );

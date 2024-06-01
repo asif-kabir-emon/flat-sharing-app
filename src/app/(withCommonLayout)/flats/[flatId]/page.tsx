@@ -3,7 +3,7 @@
 import Carousel from "@/components/UI/Carousel/Carousel";
 import Progress from "@/components/UI/Progress/Progress";
 import { useGetFlatByIdQuery } from "@/redux/api/flatApi";
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { useParams } from "next/navigation";
 import FlatInfo from "./components/FlatInfo";
 

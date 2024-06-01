@@ -1,13 +1,22 @@
 import { TagTypes } from "../tagTypes";
 import { baseApi } from "./baseApi";
 
-const USER_URL = "/flats";
+const FLAT_URL = "/flats";
 
-const userApi = baseApi.injectEndpoints({
+const flatApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+        addFlat: builder.mutation({
+            query: (data) => ({
+                url: `${FLAT_URL}/add-flat`,
+                method: "POST",
+                contentType: "multipart/form-data",
+                data,
+            }),
+            invalidatesTags: [TagTypes.flat],
+        }),
         getMyFlats: builder.query({
             query: (arg: Record<string, any>) => ({
-                url: `${USER_URL}/my-flats`,
+                url: `${FLAT_URL}/my-flats`,
                 method: "GET",
                 params: arg,
             }),
@@ -15,14 +24,14 @@ const userApi = baseApi.injectEndpoints({
         }),
         deleteSingleFlat: builder.mutation({
             query: (id: string) => ({
-                url: `${USER_URL}/${id}`,
+                url: `${FLAT_URL}/delete-flat/${id}`,
                 method: "DELETE",
             }),
             invalidatesTags: [TagTypes.flat],
         }),
         getAllFlats: builder.query({
             query: (arg: Record<string, any>) => ({
-                url: `${USER_URL}`,
+                url: `${FLAT_URL}/get-all-flats`,
                 method: "GET",
                 params: arg,
             }),
@@ -30,10 +39,18 @@ const userApi = baseApi.injectEndpoints({
         }),
         getFlatById: builder.query({
             query: (id: string) => ({
-                url: `${USER_URL}/${id}`,
+                url: `${FLAT_URL}/${id}`,
                 method: "GET",
             }),
             providesTags: [TagTypes.flat],
+        }),
+        updateFlat: builder.mutation({
+            query: (data: any) => ({
+                url: `${FLAT_URL}/update-flat/${data.id}`,
+                method: "PUT",
+                data: data.body,
+            }),
+            invalidatesTags: [TagTypes.flat],
         }),
     }),
 });
@@ -43,4 +60,6 @@ export const {
     useDeleteSingleFlatMutation,
     useGetAllFlatsQuery,
     useGetFlatByIdQuery,
-} = userApi;
+    useAddFlatMutation,
+    useUpdateFlatMutation,
+} = flatApi;
