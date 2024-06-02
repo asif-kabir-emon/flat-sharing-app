@@ -8,6 +8,7 @@ import {
     useUpdateFlatMutation,
 } from "@/redux/api/flatApi";
 import { Box, Button, Container, Grid } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
 import { useParams, useRouter } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -15,6 +16,8 @@ import { toast } from "sonner";
 const EditFlatPage = () => {
     const { flatId } = useParams();
     const router = useRouter();
+    const token = localStorage.getItem("accessToken");
+    const decodedToken = jwtDecode(token as string) as any;
 
     const [UpdateFlat] = useUpdateFlatMutation();
 
@@ -38,7 +41,11 @@ const EditFlatPage = () => {
 
             if (res?.success) {
                 toast.success("Flat updated successfully");
-                router.push("/dashboard/user/my-flats");
+                if (decodedToken.role === "USER") {
+                    router.push("/dashboard/user/my-flats");
+                } else {
+                    router.push("/dashboard/admin/flats");
+                }
             } else {
                 throw new Error("Failed to update flat");
             }

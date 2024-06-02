@@ -1,7 +1,7 @@
 "use client";
 import {
     useDeleteSingleFlatMutation,
-    useGetMyFlatsQuery,
+    useGetAllFlatsQuery,
 } from "@/redux/api/flatApi";
 import {
     Avatar,
@@ -18,14 +18,10 @@ import { useRouter } from "next/navigation";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "sonner";
-import AddIcon from "@mui/icons-material/Add";
-import AddFlatModal from "./components/AddFlatModal";
 import Progress from "@/components/UI/Progress/Progress";
 
-const MyFlatsPage = () => {
+const FlatsPage = () => {
     const router = useRouter();
-    const [isAddFlatModalOpen, setIsAddFlatModalOpen] =
-        useState<boolean>(false);
 
     const query: Record<string, any> = {};
     const [page, setPage] = useState(1);
@@ -33,7 +29,7 @@ const MyFlatsPage = () => {
     query["page"] = page;
     query["limit"] = limit;
 
-    const { data, isLoading } = useGetMyFlatsQuery({
+    const { data, isLoading } = useGetAllFlatsQuery({
         ...query,
     });
     const [deleteSingleFlat] = useDeleteSingleFlatMutation();
@@ -100,7 +96,7 @@ const MyFlatsPage = () => {
         {
             field: "actions",
             headerName: "Action",
-            minWidth: 300,
+            minWidth: 200,
             flex: 1,
             renderCell: ({ row }) => {
                 return (
@@ -110,16 +106,6 @@ const MyFlatsPage = () => {
                             gap: "8px",
                         }}
                     >
-                        <Button
-                            onClick={() => {
-                                router.push(`/flats/${row.id}`);
-                            }}
-                            sx={{
-                                color: "white",
-                            }}
-                        >
-                            View
-                        </Button>
                         <Button
                             disabled={row?.availability === false}
                             color="secondary"
@@ -161,25 +147,8 @@ const MyFlatsPage = () => {
                 }}
             >
                 <Typography variant="h5" my={3}>
-                    My Flats List
+                    Flats List
                 </Typography>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<AddIcon />}
-                    onClick={() => setIsAddFlatModalOpen(true)}
-                    sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    Add Flat
-                </Button>
-                <AddFlatModal
-                    open={isAddFlatModalOpen}
-                    setOpen={setIsAddFlatModalOpen}
-                />
             </Stack>
             {!isLoading ? (
                 <Box
@@ -238,4 +207,4 @@ const MyFlatsPage = () => {
     );
 };
 
-export default MyFlatsPage;
+export default FlatsPage;

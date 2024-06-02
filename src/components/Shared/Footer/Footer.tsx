@@ -9,34 +9,8 @@ import {
 import React from "react";
 import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import YouTubeIcon from "@mui/icons-material/YouTube";
 import Link from "next/link";
-
-const socialMediaLinks = [
-    {
-        name: "Facebook",
-        url: "https://www.facebook.com/",
-        icon: <FacebookIcon />,
-    },
-    {
-        name: "Instagram",
-        url: "https://www.instagram.com/",
-        icon: <InstagramIcon />,
-    },
-    {
-        name: "Twitter",
-        url: "https://twitter.com/",
-        icon: <TwitterIcon />,
-    },
-    {
-        name: "YouTube",
-        url: "https://www.youtube.com/",
-        icon: <YouTubeIcon />,
-    },
-];
+import { socialMediaLinks } from "@/constants/socialMedia";
 
 const Footer = () => {
     return (
@@ -131,7 +105,7 @@ const Footer = () => {
                                 marginLeft: "10px",
                             }}
                         >
-                            +91 1234567890
+                            +880 123 456 789
                         </Typography>
                     </Box>
                 </Stack>

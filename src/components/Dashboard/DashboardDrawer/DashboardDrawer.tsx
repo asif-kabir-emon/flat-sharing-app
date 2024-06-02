@@ -96,11 +96,11 @@ const DashboardDrawer = ({ children }: { children: React.ReactNode }) => {
                             </Typography>
                         </Box>
                         <Stack direction="row" spacing={2}>
-                            <Badge badgeContent={1} color="primary">
+                            {/* <Badge badgeContent={1} color="primary">
                                 <IconButton sx={{ background: "#ffffff" }}>
                                     <NotificationsNoneIcon color="action" />
                                 </IconButton>
-                            </Badge>
+                            </Badge> */}
                             <AccountMenu />
                         </Stack>
                     </Box>

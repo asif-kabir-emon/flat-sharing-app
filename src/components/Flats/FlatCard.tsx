@@ -12,28 +12,9 @@ import BedIcon from "@mui/icons-material/Bed";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SellIcon from "@mui/icons-material/Sell";
 import { useRouter } from "next/navigation";
-import { useCreateBookingMutation } from "@/redux/api/bookingApi";
-import { toast } from "sonner";
 
 const FlatCard = ({ flat }: any) => {
     const router = useRouter();
-    const [createBooking] = useCreateBookingMutation();
-
-    const bookingFlat = async () => {
-        try {
-            const res = await createBooking({
-                flatId: flat?.id,
-            }).unwrap();
-
-            if (res?.success) {
-                toast.success("Flat booked successfully.");
-            } else {
-                throw new Error(res?.message || "Failed to book flat.");
-            }
-        } catch (error: any) {
-            toast.error(error.message || "Failed to book flat.");
-        }
-    };
 
     return (
         <>
@@ -161,7 +142,7 @@ const FlatCard = ({ flat }: any) => {
                     </Button>
                     <Button
                         onClick={() => {
-                            bookingFlat();
+                            router.push(`/booking/${flat?.id}`);
                         }}
                         size="small"
                         fullWidth

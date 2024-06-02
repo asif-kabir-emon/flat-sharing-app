@@ -19,6 +19,7 @@ import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import { toast } from "sonner";
+import Progress from "@/components/UI/Progress/Progress";
 
 const Role = [
     {
@@ -289,7 +290,9 @@ const UserListPage = () => {
                     />
                 </Box>
             ) : (
-                <Box>Loading...</Box>
+                <>
+                    <Progress />
+                </>
             )}
         </Container>
     );
