@@ -56,5 +56,11 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/login", "/register", "/dashboard/:page*", "/booking/:page*"],
+    matcher: [
+        "/login",
+        "/register",
+        "/dashboard/:page*",
+        "/booking/:page*",
+        "/flats/add-flat",
+    ],
 };

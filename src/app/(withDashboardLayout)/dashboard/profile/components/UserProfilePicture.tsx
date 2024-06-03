@@ -60,7 +60,7 @@ const UserProfilePicture = ({ profilePicture }: TProps) => {
                     padding: "15px",
                 }}
             >
-                <Button
+                {/* <Button
                     color="primary"
                     startIcon={<CloudUploadIcon />}
                     fullWidth
@@ -71,7 +71,7 @@ const UserProfilePicture = ({ profilePicture }: TProps) => {
                     }}
                 >
                     Update Profile Picture
-                </Button>
+                </Button> */}
                 <Button
                     color="primary"
                     startIcon={<UpdateIcon />}

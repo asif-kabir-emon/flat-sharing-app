@@ -72,7 +72,7 @@ const HeroSection = () => {
                         gap: 2,
                     }}
                 >
-                    <Button onClick={() => router.push("/flats")}>
+                    <Button onClick={() => router.push("/flats/add-flat")}>
                         Share Your Flat
                     </Button>
                 </Box>
