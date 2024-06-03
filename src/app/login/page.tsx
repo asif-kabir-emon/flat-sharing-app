@@ -9,8 +9,6 @@ import { FieldValues } from "react-hook-form";
 import assets from "@/assets/index";
 import { userLogin } from "@/services/actions/userLogin";
 import { toast } from "sonner";
-import { setToLocalStorage } from "@/utils/localStorage";
-import { authKey } from "@/constants/authKey";
 import { loginSchema } from "@/schemas/auth.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSendOtpInEmailMutation } from "@/redux/api/authApi";
