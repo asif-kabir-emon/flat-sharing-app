@@ -1,17 +1,15 @@
 import { USER_ROLE } from "@/constants/role";
 import { DrawerItems, UserRole } from "@/types";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import TryIcon from "@mui/icons-material/Try";
-import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import ReviewsIcon from "@mui/icons-material/Reviews";
 import PersonIcon from "@mui/icons-material/Person";
-import KeyIcon from "@mui/icons-material/Key";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import BusinessIcon from "@mui/icons-material/Business";
+import BadgeIcon from "@mui/icons-material/Badge";
 
 export const drawerItems = (role: UserRole) => {
     const roleMenus: DrawerItems[] = [];
 
-    const defaultRoutesB = [
+    const defaultRoutes = [
         {
             title: "Dashboard",
             path: ``,
@@ -24,31 +22,18 @@ export const drawerItems = (role: UserRole) => {
         },
     ];
 
-    const defaultRoutesA = [
-        {
-            title: "Profile",
-            path: `profile`,
-            icon: PersonIcon,
-        },
-        // {
-        //     title: "Change Password",
-        //     path: `change-password`,
-        //     icon: KeyIcon,
-        // },
-    ];
-
     switch (role) {
         case USER_ROLE.ADMIN:
             roleMenus.push(
                 {
                     title: "Users",
                     path: `${role}/users`,
-                    icon: TryIcon,
+                    icon: BadgeIcon,
                 },
                 {
                     title: "Flats",
                     path: `${role}/flats`,
-                    icon: MedicalInformationIcon,
+                    icon: ApartmentIcon,
                 }
             );
             break;
@@ -57,12 +42,12 @@ export const drawerItems = (role: UserRole) => {
                 {
                     title: "My Flats",
                     path: `${role}/my-flats`,
-                    icon: CalendarMonthIcon,
+                    icon: ApartmentIcon,
                 },
                 {
                     title: "Flat Requests",
                     path: `${role}/flat-requests`,
-                    icon: CalendarMonthIcon,
+                    icon: BusinessIcon,
                 }
             );
             break;
@@ -70,5 +55,5 @@ export const drawerItems = (role: UserRole) => {
             break;
     }
 
-    return [...defaultRoutesB, ...roleMenus];
+    return [...defaultRoutes, ...roleMenus];
 };
