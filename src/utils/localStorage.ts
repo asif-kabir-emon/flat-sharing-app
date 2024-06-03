@@ -1,23 +1,25 @@
 export const setToLocalStorage = (key: string, token: string) => {
-    if (!key || typeof window === "undefined") {
+    if (typeof window === "undefined" || !key) {
         return "";
     }
 
-    return localStorage.setItem(key, token);
+    localStorage.setItem(key, token);
+    return token; // Optionally return the token for confirmation
 };
 
 export const getFromLocalStorage = (key: string) => {
-    if (!key || typeof window === "undefined") {
+    if (typeof window === "undefined" || !key) {
         return "";
     }
 
-    return localStorage.getItem(key);
+    return localStorage.getItem(key) || "";
 };
 
 export const removeFromLocalStorage = (key: string) => {
-    if (!key || typeof window === "undefined") {
+    if (typeof window === "undefined" || !key) {
         return "";
     }
 
-    return localStorage.removeItem(key);
+    localStorage.removeItem(key);
+    return ""; // Optionally return a confirmation message or status
 };
