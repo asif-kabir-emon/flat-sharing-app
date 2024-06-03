@@ -1,6 +1,5 @@
 import Flats from "@/components/Flats/Flats";
-import { Box, Container } from "@mui/material";
-import React from "react";
+import { Box } from "@mui/material";
 
 const FlatSection = () => {
     return (
