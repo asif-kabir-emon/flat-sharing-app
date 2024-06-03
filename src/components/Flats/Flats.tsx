@@ -29,7 +29,6 @@ const Flats = ({ isFlatsPage }: TProps) => {
 
     const currentFlatFilter = useSelector(selectFlatFilter);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const query: Record<string, any> = {};
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
@@ -69,12 +68,6 @@ const Flats = ({ isFlatsPage }: TProps) => {
 
     const flats = data?.data?.data;
     const meta = data?.data?.meta;
-
-    // let pageCount: number;
-
-    // if (meta?.total) {
-    //     pageCount = Math.ceil(meta?.total / limit);
-    // }
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -129,6 +122,8 @@ const Flats = ({ isFlatsPage }: TProps) => {
                     sx={{
                         mx: "auto",
                         mb: "30px",
+                        justifyContent: "center",
+                        alignItems: "center",
                     }}
                 >
                     {!isLoading && !isFetching ? (

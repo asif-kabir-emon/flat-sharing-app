@@ -31,21 +31,28 @@ const BookingPage = () => {
         }
     };
     return (
-        <Container>
+        <Container
+            sx={{
+                margin: "20px auto",
+                padding: "20px",
+            }}
+        >
             <Box
                 sx={{
-                    margin: "20px 0",
-                }}
-            >
-                <Typography variant="h4">Book Flat</Typography>
-            </Box>
-            <Box
-                sx={{
-                    border: "2px solid #ddd",
+                    border: "2px solid #f6f6f6",
                     borderRadius: "5px",
                     padding: "20px",
+                    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
                 }}
             >
+                <Box
+                    sx={{
+                        margin: "20px 0",
+                        textAlign: "center",
+                    }}
+                >
+                    <Typography variant="h4">Book Flat</Typography>
+                </Box>
                 <FSForm onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
