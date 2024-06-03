@@ -25,6 +25,13 @@ const authApi = baseApi.injectEndpoints({
                 data,
             }),
         }),
+        verifyUser: builder.mutation({
+            query: (data) => ({
+                url: `${AUTH_URL}/login`,
+                method: "POST",
+                data,
+            }),
+        }),
     }),
 });
 
@@ -32,4 +39,5 @@ export const {
     useSendOtpInEmailMutation,
     useVerifyEmailMutation,
     useChangePasswordMutation,
+    useVerifyUserMutation,
 } = authApi;

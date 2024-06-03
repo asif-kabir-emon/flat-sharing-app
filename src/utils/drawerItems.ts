@@ -17,6 +17,11 @@ export const drawerItems = (role: UserRole) => {
             path: ``,
             icon: DashboardIcon,
         },
+        {
+            title: "Profile",
+            path: `profile`,
+            icon: PersonIcon,
+        },
     ];
 
     const defaultRoutesA = [
@@ -25,11 +30,11 @@ export const drawerItems = (role: UserRole) => {
             path: `profile`,
             icon: PersonIcon,
         },
-        {
-            title: "Change Password",
-            path: `change-password`,
-            icon: KeyIcon,
-        },
+        // {
+        //     title: "Change Password",
+        //     path: `change-password`,
+        //     icon: KeyIcon,
+        // },
     ];
 
     switch (role) {
@@ -65,5 +70,5 @@ export const drawerItems = (role: UserRole) => {
             break;
     }
 
-    return [...defaultRoutesB, ...roleMenus, ...defaultRoutesA];
+    return [...defaultRoutesB, ...roleMenus];
 };

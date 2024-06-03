@@ -1,16 +1,20 @@
 import { Box, Button } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import { useState } from "react";
 import assets from "@/assets";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import KeyIcon from "@mui/icons-material/Key";
 import { useRouter } from "next/navigation";
+import UpdateIcon from "@mui/icons-material/Update";
+import UserModal from "./UserModal";
 
 type TProps = {
     profilePicture: string | null;
 };
 
 const UserProfilePicture = ({ profilePicture }: TProps) => {
+    const [isVerifyUserModalOpen, setIsVerifyUserModalOpen] =
+        useState<boolean>(false);
     const router = useRouter();
 
     return (
@@ -68,6 +72,23 @@ const UserProfilePicture = ({ profilePicture }: TProps) => {
                 >
                     Update Profile Picture
                 </Button>
+                <Button
+                    color="primary"
+                    startIcon={<UpdateIcon />}
+                    fullWidth
+                    sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        textTransform: "capitalize",
+                    }}
+                    onClick={() => setIsVerifyUserModalOpen(true)}
+                >
+                    Update Email
+                </Button>
+                <UserModal
+                    open={isVerifyUserModalOpen}
+                    setOpen={setIsVerifyUserModalOpen}
+                />
                 <Button
                     color="primary"
                     startIcon={<KeyIcon />}

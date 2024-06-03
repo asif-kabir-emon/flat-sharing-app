@@ -3,6 +3,7 @@ import FSForm from "@/components/Form/FSForm";
 import FSInput from "@/components/Form/FSInput";
 import FSMultiLineInput from "@/components/Form/FSMultiLineInput";
 import Progress from "@/components/UI/Progress/Progress";
+import { authKey } from "@/constants/authKey";
 import {
     useGetFlatByIdQuery,
     useUpdateFlatMutation,
@@ -16,7 +17,7 @@ import { toast } from "sonner";
 const EditFlatPage = () => {
     const { flatId } = useParams();
     const router = useRouter();
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem(authKey);
     const decodedToken = jwtDecode(token as string) as any;
 
     const [UpdateFlat] = useUpdateFlatMutation();

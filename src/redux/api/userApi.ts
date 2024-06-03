@@ -35,6 +35,13 @@ const userApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [TagTypes.user],
         }),
+        changeEmail: builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/change-email`,
+                method: "PUT",
+                data,
+            }),
+        }),
     }),
 });
 
@@ -43,4 +50,5 @@ export const {
     useGetAllUsersQuery,
     useUpdateUserRoleMutation,
     useUpdateUserStatusMutation,
+    useChangeEmailMutation,
 } = userApi;
