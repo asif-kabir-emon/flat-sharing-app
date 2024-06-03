@@ -1,24 +1,23 @@
-export const setToLocalStorage = (key: string, token: string): void => {
-    try {
-        localStorage.setItem(key, token);
-    } catch (e) {
-        console.error("Error setting to localStorage", e);
+export const setToLocalStorage = (key: string, token: string) => {
+    if (!key || !token) {
+        return "";
     }
+
+    return localStorage.setItem(key, token);
 };
 
-export const getFromLocalStorage = (key: string): string | null => {
-    try {
-        return localStorage.getItem(key);
-    } catch (e) {
-        console.error("Error getting from localStorage", e);
-        return null;
+export const getFromLocalStorage = (key: string) => {
+    if (!key) {
+        return "";
     }
+
+    return localStorage.getItem(key);
 };
 
-export const removeFromLocalStorage = (key: string): void => {
-    try {
-        localStorage.removeItem(key);
-    } catch (e) {
-        console.error("Error removing from localStorage", e);
+export const removeFromLocalStorage = (key: string) => {
+    if (!key) {
+        return "";
     }
+
+    return localStorage.removeItem(key);
 };
