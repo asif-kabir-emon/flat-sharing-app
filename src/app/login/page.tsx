@@ -24,7 +24,6 @@ const LoginPage = () => {
         try {
             const res = await userLogin(values);
             if (res?.success && res?.data?.token) {
-                setToLocalStorage(authKey, res?.data?.token);
                 if (res?.data?.isEmailVerified === false) {
                     await sendOtpInEmail({}).unwrap();
                     router.push("/email-verification");
