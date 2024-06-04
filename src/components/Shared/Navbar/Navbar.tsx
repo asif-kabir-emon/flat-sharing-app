@@ -13,10 +13,6 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { Container, Stack } from "@mui/material";
 
-interface Props {
-    window?: () => Window;
-}
-
 const drawerWidth = 240;
 const navItems = [
     {
@@ -29,9 +25,8 @@ const navItems = [
     },
 ];
 
-const Navbar = (props: Props) => {
+const Navbar = () => {
     const pathName = usePathname();
-    const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const AuthButton = dynamic(
@@ -100,9 +95,6 @@ const Navbar = (props: Props) => {
             </List>
         </Box>
     );
-
-    const container =
-        window !== undefined ? () => window().document.body : undefined;
 
     return (
         <Container
@@ -180,7 +172,6 @@ const Navbar = (props: Props) => {
                 }}
             >
                 <Drawer
-                    container={container}
                     variant="temporary"
                     open={mobileOpen}
                     onClose={handleDrawerToggle}
