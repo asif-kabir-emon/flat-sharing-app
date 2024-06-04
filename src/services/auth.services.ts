@@ -1,9 +1,10 @@
 import { authKey } from "@/constants/authKey";
 import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
 import { decodedToken } from "@/utils/jwtDecode";
+import { getFromLocalStorage } from "@/utils/localStorage";
 
 export const isLoggedIn = () => {
-    const authToken = localStorage.getItem(authKey);
+    const authToken = getFromLocalStorage(authKey);
 
     return !!authToken;
 };
@@ -20,7 +21,7 @@ export const generateNewAccessToken = async () => {
 };
 
 export const getUserInfo = () => {
-    const authToken = localStorage.getItem(authKey);
+    const authToken = getFromLocalStorage(authKey);
 
     if (authToken) {
         const decodedData: any = decodedToken(authToken);

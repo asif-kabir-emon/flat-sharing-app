@@ -1,6 +1,7 @@
 import { FieldValues } from "react-hook-form";
 import setAccessToken from "./setAccessToken";
 import { authKey } from "@/constants/authKey";
+import { setToLocalStorage } from "@/utils/localStorage";
 
 export const userLogin = async (data: FieldValues) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
@@ -18,7 +19,7 @@ export const userLogin = async (data: FieldValues) => {
     const isEmailVerified = userInfo?.data?.isEmailVerified;
 
     if (userInfo && accessToken && isEmailVerified !== undefined) {
-        localStorage.setItem(authKey, accessToken);
+        setToLocalStorage(authKey, accessToken);
         setAccessToken(accessToken, {
             isEmailVerified,
         });

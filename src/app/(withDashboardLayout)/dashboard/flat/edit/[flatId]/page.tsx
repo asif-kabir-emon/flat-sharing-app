@@ -8,6 +8,7 @@ import {
     useGetFlatByIdQuery,
     useUpdateFlatMutation,
 } from "@/redux/api/flatApi";
+import { getFromLocalStorage } from "@/utils/localStorage";
 import { Box, Button, Container, Grid } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useParams, useRouter } from "next/navigation";
@@ -17,7 +18,7 @@ import { toast } from "sonner";
 const EditFlatPage = () => {
     const { flatId } = useParams();
     const router = useRouter();
-    const token = localStorage.getItem(authKey);
+    const token = getFromLocalStorage(authKey);
     const decodedToken = jwtDecode(token as string) as any;
 
     const [UpdateFlat] = useUpdateFlatMutation();

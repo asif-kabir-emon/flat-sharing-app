@@ -7,6 +7,7 @@ import {
     useVerifyUserMutation,
 } from "@/redux/api/authApi";
 import { decodedToken } from "@/utils/jwtDecode";
+import { getFromLocalStorage } from "@/utils/localStorage";
 import { Button, Grid } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
@@ -22,7 +23,7 @@ type TProps = {
 const UserModal = ({ open, setOpen }: TProps) => {
     const router = useRouter();
     const [verifyUser] = useVerifyUserMutation();
-    const token = localStorage.getItem(authKey);
+    const token = getFromLocalStorage(authKey);
     const decodedToken = jwtDecode(token as string) as any;
     const [sendOtpInEmail] = useSendOtpInEmailMutation();
 
