@@ -9,9 +9,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { Container, Stack } from "@mui/material";
+import AuthButton from "@/components/UI/AuthButton/AuthButton";
 
 const drawerWidth = 240;
 const navItems = [
@@ -33,12 +34,12 @@ const Navbar = () => {
     const pathName = usePathname();
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
-    const AuthButton = dynamic(
-        () => import("@/components/UI/AuthButton/AuthButton"),
-        {
-            ssr: false,
-        }
-    );
+    // const AuthButton = dynamic(
+    //     () => import("@/components/UI/AuthButton/AuthButton"),
+    //     {
+    //         ssr: false,
+    //     }
+    // );
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
