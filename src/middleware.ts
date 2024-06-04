@@ -4,7 +4,6 @@ import type { NextRequest } from "next/server";
 
 const AuthRoutes = ["/login", "/register"];
 const commonPrivateRoutes = ["/dashboard", "/dashboard/change-password"];
-const logoutRoutes = ["/dashboard/change-password"];
 const roleBasedPrivateRoutes = {
     USER: [/^\/dashboard\/user/],
     ADMIN: [/^\/dashboard\/admin/],
@@ -27,9 +26,6 @@ export function middleware(request: NextRequest) {
 
     if (accessToken && commonPrivateRoutes.includes(pathname)) {
         return NextResponse.next();
-    }
-    if (logoutRoutes.includes(pathname)) {
-        return NextResponse.redirect(new URL("/", request.url));
     }
 
     let decodedData = null;
