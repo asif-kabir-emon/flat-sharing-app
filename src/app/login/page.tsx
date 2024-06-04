@@ -13,6 +13,8 @@ import { loginSchema } from "@/schemas/auth.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSendOtpInEmailMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
+import { setToLocalStorage } from "@/utils/localStorage";
+import { authKey } from "@/constants/authKey";
 
 const LoginPage = () => {
     const [sendOtpInEmail] = useSendOtpInEmailMutation();
@@ -22,6 +24,7 @@ const LoginPage = () => {
         try {
             const res = await userLogin(values);
             if (res?.success && res?.data?.token) {
+                setToLocalStorage(authKey, res?.data?.token);
                 if (res?.data?.isEmailVerified === false) {
                     await sendOtpInEmail({}).unwrap();
                     router.push("/email-verification");

@@ -14,6 +14,8 @@ import { userRegistration } from "@/services/actions/userRegistration";
 import { userLogin } from "@/services/actions/userLogin";
 import { useSendOtpInEmailMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
+import { setToLocalStorage } from "@/utils/localStorage";
+import { authKey } from "@/constants/authKey";
 
 const RegisterPage = () => {
     const [sendOtpInEmail] = useSendOtpInEmailMutation();
@@ -43,6 +45,7 @@ const RegisterPage = () => {
 
                 const res = await userLogin(loginData);
                 if (res?.success && res?.data?.token) {
+                    setToLocalStorage(authKey, res?.data?.token);
                     if (res?.data?.isEmailVerified === false) {
                         await sendOtpInEmail({}).unwrap();
                         router.push("/email-verification");
