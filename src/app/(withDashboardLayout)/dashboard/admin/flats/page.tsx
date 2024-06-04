@@ -80,7 +80,15 @@ const FlatsPage = () => {
                 );
             },
         },
-        { field: "location", headerName: "Location", minWidth: 300, flex: 1 },
+        {
+            field: "flatLocation",
+            headerName: "Flat Location",
+            minWidth: 300,
+            flex: 1,
+            renderCell: ({ row }) => {
+                return `${location}`;
+            },
+        },
         {
             field: "totalBedrooms",
             headerName: "Total Bedrooms",

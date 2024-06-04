@@ -20,6 +20,10 @@ const navItems = [
         url: "/",
     },
     {
+        name: "Flats",
+        url: "/flats",
+    },
+    {
         name: "About Us",
         url: "/about",
     },
