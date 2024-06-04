@@ -84,7 +84,12 @@ const MyFlatsPage = () => {
                 );
             },
         },
-        { field: "location", headerName: "Location", minWidth: 300, flex: 1 },
+        {
+            field: "location",
+            headerName: "Flat Location",
+            minWidth: 300,
+            flex: 1,
+        },
         {
             field: "totalBedrooms",
             headerName: "Total Bedrooms",
