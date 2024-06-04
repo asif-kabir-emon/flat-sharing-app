@@ -14,7 +14,7 @@ const ProfilePage = () => {
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
                     <UserProfilePicture
-                        profilePicture={profileData?.profilePicture}
+                        profilePicture={profileData?.profilePicture || null}
                     />
                 </Grid>
                 <Grid item xs={12} md={8}>
